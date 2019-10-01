@@ -67,13 +67,17 @@ html, body {
 .image-container .item .color-panel .color .tooltip {
   background: #202428;
   color: white;
-  padding: 4px;
   border-radius: 4px;
   position: absolute;
   bottom: -35px;
   z-index: 100;
   margin: 0 auto;
   display: none;
+}
+
+.image-container .item .color-panel .color .tooltip span {
+  display: inline-block;
+  margin: 4px;
 }
 
 .image-container .item .color-panel .color:hover .tooltip {

@@ -5,32 +5,43 @@ let imagesSetsLoaded = 0;
 
 function createImage(index) {
 
-    fetch(`https://picsum.photos/400/300?random=${index * index}`).then((response) => {
+    // fetch(`https://picsum.photos/400/300?random=${Math.ceil(Math.random() * 10000)}`).then((response) => {
 
-        let item = document.createElement('div');
-        item.classList.add('item' + imagesSetsLoaded + '' + index, 'item');
-        item.innerHTML = `
-        <img src="${response.url}" alt="random image"/>
-        <div class="color-panel color-panel${imagesSetsLoaded}${index}">
-            <div class="color" onclick="onColorClick(event)">
-                <div class="tooltip"></div>
-            </div>
-            <div class="color" onclick="onColorClick(event)">
-                <div class="tooltip"></div>
-            </div>
-            <div class="color" onclick="onColorClick(event)">
-                <div class="tooltip"></div>
-            </div>
-            <div class="color" onclick="onColorClick(event)">
-                <div class="tooltip"></div>
-            </div>
-        </div>
-    
-    `
-        imageContainer.appendChild(item);
-        item.children[0].setAttribute("crossorigin", "anonymous");
-        findColors(item);
-    })
+    const myurl = `https://picsum.photos/400/300?random=${Math.ceil(Math.random() * 10000)}`;
+
+    axios({
+        method: 'get',
+        url: myurl,
+        responseType: 'json',
+      })
+        .then(function (response) {
+            let item = document.createElement('div');
+            item.classList.add('item' + imagesSetsLoaded + '' + index, 'item');
+            item.innerHTML = `
+                <img src="${response.request.responseURL}" alt="random image"/>
+                <div class="color-panel color-panel${imagesSetsLoaded}${index}">
+                    <div class="color" onclick="onColorClick(event)">
+                        <div class="tooltip"></div>
+                    </div>
+                    <div class="color" onclick="onColorClick(event)">
+                        <div class="tooltip"></div>
+                    </div>
+                    <div class="color" onclick="onColorClick(event)">
+                        <div class="tooltip"></div>
+                    </div>
+                    <div class="color" onclick="onColorClick(event)">
+                        <div class="tooltip"></div>
+                    </div>
+                </div>
+            
+            `
+            imageContainer.appendChild(item);
+            item.children[0].setAttribute("crossorigin", "anonymous");
+            findColors(item);
+        });
+
+
+    // })
 
 }
 
@@ -76,10 +87,10 @@ function findColors(item) {
         color4.style.backgroundColor = `rgb(${colors[3][0]}, ${colors[3][1]}, ${colors[3][2]})`;
         // color5.style.backgroundColor = `rgb(${colors[4][0]},${colors[4][1]},${colors[4][2]})`;
 
-        color1.children[0].innerHTML= rgbToHex(colors[0][0],colors[0][1],colors[0][1]);
-        color2.children[0].innerHTML= rgbToHex(colors[1][0],colors[1][1],colors[1][1]);
-        color3.children[0].innerHTML= rgbToHex(colors[2][0],colors[2][1],colors[2][1]);
-        color4.children[0].innerHTML= rgbToHex(colors[3][0],colors[3][1],colors[3][1]);
+        color1.children[0].innerHTML = "<span>" + rgbToHex(colors[0][0], colors[0][1], colors[0][1]) + "</span";
+        color2.children[0].innerHTML = "<span>" + rgbToHex(colors[1][0], colors[1][1], colors[1][1]) + "</span";
+        color3.children[0].innerHTML = "<span>" + rgbToHex(colors[2][0], colors[2][1], colors[2][1]) + "</span";
+        color4.children[0].innerHTML = "<span>" + rgbToHex(colors[3][0], colors[3][1], colors[3][1]) + "</span";
     }
 
 
@@ -140,9 +151,9 @@ function onColorClick(e) {
     let blue = rgbColor.blue;
     let hexColor = rgbToHex(red, green, blue);
     copyToClipboard(hexColor);
-    e.target.children[0].innerHTML = "Copied";
+    e.target.children[0].innerHTML = "<span>Copied</span>";
     setTimeout(() => {
-        e.target.children[0].innerHTML = hexColor; 
+        e.target.children[0].innerHTML = "<span>" + hexColor + "</span";
     }, 4000);
 
     function getRGB(str) {
