@@ -336,6 +336,32 @@ html, body {
   bottom: 40px;
 }
 
+.empty-favourites-page {
+  text-align: center;
+}
+
+.empty-favourites-page img {
+  width: 25%;
+}
+
+.empty-favourites-page .message {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #202428;
+  width: 50%;
+  margin: 0 auto;
+  margin-top: -20px;
+}
+
+.empty-favourites-page .info {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: #A8A8A8;
+  width: 50%;
+  margin: 0 auto;
+  margin-top: 10px;
+}
+
 @-webkit-keyframes slide-up {
   0% {
     opacity: 0;

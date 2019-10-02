@@ -5,12 +5,19 @@ let loader = document.querySelector(".loader");
 let imagesSetsLoaded = 0;
 let flag = true;
 let favouriteImages = [];
+let pageEmpty = false;
 
 function loadImages() {
     if (localStorage.getItem("imageHueUrl")) {
         favouriteImages = JSON.parse(localStorage.getItem("imageHueUrl"));
         for (let i = 0; i < favouriteImages.length; i++) {
             createImage(i, favouriteImages[i]);
+        }
+        if(favouriteImages.length === 0){
+            pageEmpty = true;
+        }
+        else{
+            pageEmpty = false;
         }
     }
 };
