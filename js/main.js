@@ -1,28 +1,65 @@
-let imagesPerLoad = 20;
-let totalImageSets = 5;
+let imagesPerLoad = 30;
+let totalImageSets = 15;
 let imageContainer = document.querySelector(".image-container");
 let loader = document.querySelector(".loader");
 let imagesSetsLoaded = 0;
 let flag = true;
 let favouriteImages = [];
-let imageProperties = {url: "", color1: "", color2: "", color3: "", color4: ""};
+let imageProperties = { url: "", color1: "", color2: "", color3: "", color4: "" };
+let displayedImageUrls = [];
+let rowUrl = [];
+let continuousLoad = true;
 
-function createImage(index) {
+
+//Fetch image set with api
+function fetchImage() {
 
 
-    const myurl = `https://picsum.photos/400/300?random=${Math.ceil(Math.random() * 10000)}`;
+    // const requestUrl = `https://picsum.photos/400/300?random=${Math.ceil(Math.random() * 10000)}`;
+    const requestUrl = `https://source.unsplash.com/collection/random/400x300?sig=${Math.ceil(Math.random() * 10000)}`;
 
     axios({
         method: 'get',
-        url: myurl,
+        url: requestUrl,
         responseType: 'json',
     })
         .then(function (response) {
-            let item = document.createElement('div');
-            item.classList.add('item' + imagesSetsLoaded + '' + index, 'item');
-            item.innerHTML = `
-                <img src="${response.request.responseURL}" alt="random image"/>
-                <div class="color-panel color-panel${imagesSetsLoaded}${index}">
+            console.log(response);
+            imageUrl = response.request.responseURL;
+
+
+            let imageExists = false;
+
+
+            for (let i = 0; i < displayedImageUrls.length; i++) {
+                if (response.request.responseURL === displayedImageUrls[i]) {
+                    imageExists = true;
+                }
+            }
+
+            if (!imageExists) {
+
+                createImageCard(response.request.responseURL);
+
+                displayedImageUrls.push(response.request.responseURL);
+            }
+
+
+        });
+
+}
+
+
+
+
+
+//Creating image card
+function createImageCard(url) {
+    let item = document.createElement('div');
+    item.classList.add('item');
+    item.innerHTML = `
+                <img src="${url}" alt="random image"/>
+                <div class="color-panel">
                     <div class="color" onclick="onColorClick(event)">
                         <div class="tooltip"></div>
                     </div>
@@ -47,26 +84,26 @@ function createImage(index) {
                 </div>
             
             `
-            imageContainer.appendChild(item);
-            item.children[0].setAttribute("crossorigin", "anonymous");
-            findColors(item);
-            loadFavourites(item);
-        });
-
-
-
+    imageContainer.appendChild(item);
+    item.children[0].setAttribute("crossorigin", "anonymous");
+    findColors(item);
+    loadFavourites(item);
 }
 
 
+//Load Images
 function loadImageSet() {
 
     imagesSetsLoaded++;
+
+
+
     if (imagesSetsLoaded < totalImageSets) {
 
         loader.style.display = "flex";
 
         for (let i = 0; i < imagesPerLoad; i++) {
-            createImage(i);
+            fetchImage();
         }
 
     }
@@ -76,7 +113,7 @@ function loadImageSet() {
 
 }
 
-
+//Find image color palette
 function findColors(item) {
 
     let color;
@@ -109,17 +146,26 @@ function findColors(item) {
     }
 
 
-
-
 }
 
 
+//Load more images when scroll reaches bottom
 window.addEventListener("scroll", () => {
     if (Math.ceil(window.innerHeight + document.documentElement.scrollTop) >= document.body.offsetHeight - 30) {
-        if (flag) {
-            loadImageSet();
+
+        if (continuousLoad) {
+            setTimeout(() => {
+                loadImageSet();
+            }, 500);
         }
-        flag = false;
+        else {
+            if (flag) {
+                loadImageSet();
+            }
+            flag = false;
+        }
+
+
     }
     else {
         flag = true;
@@ -129,6 +175,7 @@ window.addEventListener("scroll", () => {
 });
 
 
+//Copy color to clipboard on click
 function onColorClick(e) {
     let rgbColor = getRGB(e.target.style.backgroundColor);
     let red = rgbColor.red;
@@ -170,6 +217,7 @@ function onColorClick(e) {
 }
 
 
+//convert particular r,g or b value to its corresponding hex value
 function convertToHex(rgb) {
     let hex = Number(rgb).toString(16);
     if (hex.length < 2) {
@@ -179,6 +227,7 @@ function convertToHex(rgb) {
 };
 
 
+//convert rgb value to hex value
 function rgbToHex(r, g, b) {
     let red = convertToHex(r);
     let green = convertToHex(g);
@@ -187,6 +236,7 @@ function rgbToHex(r, g, b) {
 };
 
 
+//add or remove to/from favourites
 function addRemoveFavourites(event) {
 
     event.currentTarget.classList.add("added");
@@ -212,7 +262,9 @@ function addRemoveFavourites(event) {
 
 }
 
-function loadFavourites(item){
+
+//set image as favourite if the image displayed has already been added to favourites
+function loadFavourites(item) {
     const imageUrl = item.children[0].getAttribute("src");
     if (localStorage.getItem("imageHueUrl")) {
         favouriteImages = JSON.parse(localStorage.getItem("imageHueUrl"));
