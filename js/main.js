@@ -9,6 +9,7 @@ let imageProperties = { url: "", color1: "", color2: "", color3: "", color4: "" 
 let displayedImageUrls = [];
 let rowUrl = [];
 let continuousLoad = true;
+let scrollOffset = 70;
 
 
 //Fetch image set with api
@@ -150,7 +151,7 @@ function findColors(item) {
 
 //Load more images when scroll reaches bottom
 window.addEventListener("scroll", () => {
-    if (Math.ceil(window.innerHeight + document.documentElement.scrollTop) >= document.body.offsetHeight - 30) {
+    if (Math.ceil(window.innerHeight + document.documentElement.scrollTop) >= document.body.offsetHeight - scrollOffset) {
 
         if (continuousLoad) {
             setTimeout(() => {

@@ -180,7 +180,6 @@ html, body {
 }
 
 .about-wrapper .info-container {
-  width: 100%;
   background: white;
   border-radius: 8px;
   -webkit-box-shadow: 0 40px 100px -20px rgba(11, 16, 38, 0.075), 0 30px 70px -30px rgba(0, 0, 0, 0.05);
