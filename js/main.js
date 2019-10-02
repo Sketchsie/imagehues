@@ -24,7 +24,6 @@ function fetchImage() {
         responseType: 'json',
     })
         .then(function (response) {
-            console.log(response);
             imageUrl = response.request.responseURL;
 
 
