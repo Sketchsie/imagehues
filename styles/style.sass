@@ -50,22 +50,58 @@ html,body
 
 .header-container
     padding-top: 50px
-    padding-bottom: 20px
     padding-left: 9%
     padding-right: 9%
-    h1
-        font-family: 'Montserrat', sans-serif
-        font-weight: 700
-        font-size: 5rem
-        color: $black1
-        span
-            color: $red
+    .heading
+        position: relative
+        h1
+            font-family: 'Montserrat', sans-serif
+            font-weight: 700
+            font-size: 5rem
+            color: $black1
+            margin-bottom: 0
+            span
+                color: $red
+        .social-media
+            position: absolute
+            right: 1%
+            top: 20px
+            display: flex
+            align-items: center
+            span
+                font-size: 1rem
+                font-weight: 400
+                color: $black1
+                display: inline-block
+                margin-right: 10px
+            a
+                display: inline-block
+                width: 40px
+                height: 40px
+                border-radius: 50%
+                border: 1px solid $black1
+                cursor: pointer
+                position: relative
+                transition: all 0.3s ease
+                margin: 4px
+                img
+                    width: 60%
+                    position: absolute
+                    top: 0
+                    bottom: 0
+                    left: 0
+                    right: 0
+                    margin: auto
+            .twitter:hover
+                background: #00acee
+            .fb:hover
+                background: #3b5998
+            
     h3
         font-size: 1.6rem
         color: $black1
     .additional-info
         display: flex
-        
         h4
             color: $grey3
             display: inline-block
@@ -103,6 +139,7 @@ html,body
         .story
             color: $black1
             font-size: 1rem
+            text-align: center
         .note
             color: $grey3
             font-size: 1rem
@@ -233,8 +270,10 @@ html,body
         position: relative
         bottom: 40px
 
-.empty-favourites-page
+#empty-favourites-page
     text-align: center
+    margin: 0 auto
+    display: none
     img
         width: 25%
     .message

@@ -5,7 +5,6 @@ let loader = document.querySelector(".loader");
 let imagesSetsLoaded = 0;
 let flag = true;
 let favouriteImages = [];
-let pageEmpty = false;
 
 function loadImages() {
     if (localStorage.getItem("imageHueUrl")) {
@@ -13,11 +12,11 @@ function loadImages() {
         for (let i = 0; i < favouriteImages.length; i++) {
             createImage(i, favouriteImages[i]);
         }
-        if(favouriteImages.length === 0){
-            pageEmpty = true;
+        if (favouriteImages.length === 0) {
+            document.getElementById("empty-favourites-page").style.display = "block";
         }
-        else{
-            pageEmpty = false;
+        else {
+            document.getElementById("empty-favourites-page").style.display = "none";
         }
     }
 };
@@ -63,17 +62,17 @@ function createImage(index, imageProperties) {
     const color3 = item.children[0].nextElementSibling.children[2];
     const color4 = item.children[0].nextElementSibling.children[3];
 
-    
+
     color1.style.backgroundColor = imageProperties.color1;
     color2.style.backgroundColor = imageProperties.color2;
     color3.style.backgroundColor = imageProperties.color3;
     color4.style.backgroundColor = imageProperties.color4;
-    
+
     const color1Hex = rgbToHex(getRGB(color1.style.backgroundColor).red, getRGB(color1.style.backgroundColor).green, getRGB(color1.style.backgroundColor).blue);
     const color2Hex = rgbToHex(getRGB(color2.style.backgroundColor).red, getRGB(color2.style.backgroundColor).green, getRGB(color2.style.backgroundColor).blue);
     const color3Hex = rgbToHex(getRGB(color3.style.backgroundColor).red, getRGB(color3.style.backgroundColor).green, getRGB(color3.style.backgroundColor).blue);
     const color4Hex = rgbToHex(getRGB(color4.style.backgroundColor).red, getRGB(color4.style.backgroundColor).green, getRGB(color4.style.backgroundColor).blue);
-    
+
     color1.children[0].innerHTML = "<span>" + color1Hex + "</span";
     color2.children[0].innerHTML = "<span>" + color2Hex + "</span";
     color3.children[0].innerHTML = "<span>" + color3Hex + "</span";
@@ -144,7 +143,7 @@ function getRGB(str) {
 
 
 function removeFavourites(event) {
-    
+
     let imageUrl = event.currentTarget.parentElement.children[0].getAttribute("src");
     for (let i = 0; i < favouriteImages.length; i++) {
         if (imageUrl === favouriteImages[i].url) {

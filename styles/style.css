@@ -61,20 +61,75 @@ html, body {
 
 .header-container {
   padding-top: 50px;
-  padding-bottom: 20px;
   padding-left: 9%;
   padding-right: 9%;
 }
 
-.header-container h1 {
+.header-container .heading {
+  position: relative;
+}
+
+.header-container .heading h1 {
   font-family: 'Montserrat', sans-serif;
   font-weight: 700;
   font-size: 5rem;
   color: #202428;
+  margin-bottom: 0;
 }
 
-.header-container h1 span {
+.header-container .heading h1 span {
   color: #F86C5C;
+}
+
+.header-container .heading .social-media {
+  position: absolute;
+  right: 1%;
+  top: 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.header-container .heading .social-media span {
+  font-size: 1rem;
+  font-weight: 400;
+  color: #202428;
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.header-container .heading .social-media a {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid #202428;
+  cursor: pointer;
+  position: relative;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  margin: 4px;
+}
+
+.header-container .heading .social-media a img {
+  width: 60%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.header-container .heading .social-media .twitter:hover {
+  background: #00acee;
+}
+
+.header-container .heading .social-media .fb:hover {
+  background: #3b5998;
 }
 
 .header-container h3 {
@@ -140,6 +195,7 @@ html, body {
 .about-wrapper .info-container .story {
   color: #202428;
   font-size: 1rem;
+  text-align: center;
 }
 
 .about-wrapper .info-container .note {
@@ -336,15 +392,17 @@ html, body {
   bottom: 40px;
 }
 
-.empty-favourites-page {
+#empty-favourites-page {
   text-align: center;
+  margin: 0 auto;
+  display: none;
 }
 
-.empty-favourites-page img {
+#empty-favourites-page img {
   width: 25%;
 }
 
-.empty-favourites-page .message {
+#empty-favourites-page .message {
   font-size: 1.2rem;
   font-weight: 600;
   color: #202428;
@@ -353,7 +411,7 @@ html, body {
   margin-top: -20px;
 }
 
-.empty-favourites-page .info {
+#empty-favourites-page .info {
   font-size: 0.9rem;
   font-weight: 400;
   color: #A8A8A8;
