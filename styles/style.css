@@ -3,6 +3,8 @@ html, body {
   padding: 0;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
+  font-family: 'Open Sans', sans-serif;
+  background: #F2F3F3;
 }
 
 .page-wrapper {
@@ -10,9 +12,47 @@ html, body {
 }
 
 .top-navigation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   background: white;
   height: 50px;
   border-bottom: 1px solid #D6D6D6;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 0 20px;
+  z-index: 200;
+}
+
+.top-navigation #nav-items li {
+  list-style: none;
+  display: inline-block;
+}
+
+.top-navigation #nav-items li a {
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  color: #0C1023;
+  margin: 0 16px;
+  -webkit-transition: color 0.1s ease;
+  transition: color 0.1s ease;
+}
+
+.top-navigation #nav-items li a:hover {
+  opacity: 0.8;
+}
+
+.top-navigation #nav-items li.active a {
+  color: #F86C5C;
 }
 
 .image-container {
@@ -35,6 +75,9 @@ html, body {
   border-radius: 8px;
   -webkit-box-shadow: 0 40px 100px -20px rgba(11, 16, 38, 0.075), 0 30px 70px -30px rgba(0, 0, 0, 0.05);
           box-shadow: 0 40px 100px -20px rgba(11, 16, 38, 0.075), 0 30px 70px -30px rgba(0, 0, 0, 0.05);
+  -webkit-animation: slide-up 1s ease;
+          animation: slide-up 1s ease;
+  position: relative;
 }
 
 .image-container .item img {
@@ -62,6 +105,8 @@ html, body {
   background: #F2F3F3;
   cursor: pointer;
   position: relative;
+  -webkit-animation: scale 1.5s ease;
+          animation: scale 1.5s ease;
 }
 
 .image-container .item .color-panel .color .tooltip {
@@ -82,5 +127,122 @@ html, body {
 
 .image-container .item .color-panel .color:hover .tooltip {
   display: block;
+}
+
+.image-container .item .favourite {
+  width: 32px;
+  height: 32px;
+  background: white;
+  border-radius: 50%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  display: none;
+  opacity: 0;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.image-container .item .favourite svg {
+  width: 16px;
+  height: 16px;
+}
+
+.image-container .item .favourite.added svg path {
+  fill: #F86C5C;
+}
+
+.image-container .item .close svg {
+  width: 12px;
+  height: 12px;
+}
+
+.image-container .item:hover .favourite {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  opacity: 1;
+}
+
+.loader {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.loader svg {
+  width: 100px;
+  height: 100px;
+  margin: 20px;
+  display: inline-block;
+  text-align: center;
+  padding-left: 50px;
+  position: relative;
+  bottom: 40px;
+}
+
+@-webkit-keyframes slide-up {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(30px);
+            transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+}
+
+@keyframes slide-up {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(30px);
+            transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+}
+
+@-webkit-keyframes scale {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(0.5);
+            transform: scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+
+@keyframes scale {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(0.5);
+            transform: scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
 }
 /*# sourceMappingURL=style.css.map */

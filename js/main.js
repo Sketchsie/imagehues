@@ -1,11 +1,14 @@
 let imagesPerLoad = 20;
-let totalImageSets = 10;
+let totalImageSets = 5;
 let imageContainer = document.querySelector(".image-container");
+let loader = document.querySelector(".loader");
 let imagesSetsLoaded = 0;
+let flag = true;
+let favouriteImages = [];
+let imageProperties = {url: "", color1: "", color2: "", color3: "", color4: ""};
 
 function createImage(index) {
 
-    // fetch(`https://picsum.photos/400/300?random=${Math.ceil(Math.random() * 10000)}`).then((response) => {
 
     const myurl = `https://picsum.photos/400/300?random=${Math.ceil(Math.random() * 10000)}`;
 
@@ -13,7 +16,7 @@ function createImage(index) {
         method: 'get',
         url: myurl,
         responseType: 'json',
-      })
+    })
         .then(function (response) {
             let item = document.createElement('div');
             item.classList.add('item' + imagesSetsLoaded + '' + index, 'item');
@@ -33,15 +36,24 @@ function createImage(index) {
                         <div class="tooltip"></div>
                     </div>
                 </div>
+                <div class="favourite" onclick="addRemoveFavourites(event)">
+                    <svg viewBox="0 0 14.231 12.094" xmlns="http://www.w3.org/2000/svg">
+                        <g transform="translate(-1.999 -4)">
+                        <g transform="translate(1.999 4)" data-name="Layer 2">
+                        <path transform="translate(-1.999 -4)" d="M9.114,16.095a.711.711,0,0,1-.505-.206L3.081,10.353A3.723,3.723,0,1,1,8.346,5.089l.768.768.768-.768a3.723,3.723,0,1,1,5.265,5.265L9.619,15.888A.711.711,0,0,1,9.114,16.095ZM5.713,5.423a2.277,2.277,0,0,0-1.622.669,2.305,2.305,0,0,0,0,3.251l5.023,5.03,5.023-5.03a2.305,2.305,0,0,0,0-3.251,2.362,2.362,0,0,0-3.244,0L9.619,7.372a.711.711,0,0,1-1.01,0L7.335,6.092a2.277,2.277,0,0,0-1.622-.669Z" fill="#202428"/>
+                        </g>
+                        </g>
+                    </svg>
+                </div>
             
             `
             imageContainer.appendChild(item);
             item.children[0].setAttribute("crossorigin", "anonymous");
             findColors(item);
+            loadFavourites(item);
         });
 
 
-    // })
 
 }
 
@@ -51,10 +63,15 @@ function loadImageSet() {
     imagesSetsLoaded++;
     if (imagesSetsLoaded < totalImageSets) {
 
+        loader.style.display = "flex";
+
         for (let i = 0; i < imagesPerLoad; i++) {
             createImage(i);
         }
 
+    }
+    else {
+        loader.style.display = "none";
     }
 
 }
@@ -70,7 +87,6 @@ function findColors(item) {
     const color2 = img.nextElementSibling.children[1];
     const color3 = img.nextElementSibling.children[2];
     const color4 = img.nextElementSibling.children[3];
-    // const color5 = img.nextElementSibling.children[4];
 
     if (img.complete) {
         fillColor(colorThief.getPalette(img, 4));
@@ -85,7 +101,6 @@ function findColors(item) {
         color2.style.backgroundColor = `rgb(${colors[1][0]}, ${colors[1][1]}, ${colors[1][2]})`;
         color3.style.backgroundColor = `rgb(${colors[2][0]}, ${colors[2][1]}, ${colors[2][2]})`;
         color4.style.backgroundColor = `rgb(${colors[3][0]}, ${colors[3][1]}, ${colors[3][2]})`;
-        // color5.style.backgroundColor = `rgb(${colors[4][0]},${colors[4][1]},${colors[4][2]})`;
 
         color1.children[0].innerHTML = "<span>" + rgbToHex(colors[0][0], colors[0][1], colors[0][1]) + "</span";
         color2.children[0].innerHTML = "<span>" + rgbToHex(colors[1][0], colors[1][1], colors[1][1]) + "</span";
@@ -95,51 +110,21 @@ function findColors(item) {
 
 
 
-    //---------------Vibrant js------------------------------------------------
 
-    // const vibrantColor = img.nextElementSibling.children[0];
-    // const mutedColor = img.nextElementSibling.children[1];
-    // const darkVibrantColor = img.nextElementSibling.children[2];
-    // const darkMutedColor = img.nextElementSibling.children[3];
-    // const lightVibrantColor = img.nextElementSibling.children[4];
-
-    // img.addEventListener('load', function () {
-    //     var vibrant = new Vibrant(img);
-
-    //     var swatches = vibrant.swatches();
-
-    //     for (var swatch in swatches) {
-    //         if (swatches.hasOwnProperty(swatch) && swatches[swatch]) {
-    //             // console.log(swatch, swatches[swatch].getHex());
-    //             color = swatches[swatch].getHex();
-
-    //             switch (swatch) {
-    //                 case "Vibrant": vibrantColor.style.backgroundColor = color
-    //                     break;
-    //                 case "Muted": mutedColor.style.backgroundColor = color
-    //                     break;
-    //                 case "DarkVibrant": darkVibrantColor.style.backgroundColor = color
-    //                     break;
-    //                 case "DarkMuted": darkMutedColor.style.backgroundColor = color
-    //                     break;
-    //                 case "LightVibrant": lightVibrantColor.style.backgroundColor = color
-    //                     break;
-
-    //             }
-    //         }
-    //     }
-
-
-    // });
 }
 
 
 window.addEventListener("scroll", () => {
-    if (Math.ceil(window.innerHeight + document.documentElement.scrollTop) >= document.body.offsetHeight) {
-        setTimeout(() => {
+    if (Math.ceil(window.innerHeight + document.documentElement.scrollTop) >= document.body.offsetHeight - 30) {
+        if (flag) {
             loadImageSet();
-        }, 500);
+        }
+        flag = false;
     }
+    else {
+        flag = true;
+    }
+
 
 });
 
@@ -200,6 +185,45 @@ function rgbToHex(r, g, b) {
     let blue = convertToHex(b);
     return '#' + red + green + blue;
 };
+
+
+function addRemoveFavourites(event) {
+
+    event.currentTarget.classList.add("added");
+    if (localStorage.getItem("imageHueUrl")) {
+        favouriteImages = JSON.parse(localStorage.getItem("imageHueUrl"));
+    }
+    let imageUrl = event.currentTarget.parentElement.children[0].getAttribute("src");
+    let colorPalette = event.currentTarget.parentElement.children[1];
+    imageProperties.url = imageUrl;
+    imageProperties.color1 = colorPalette.children[0].style.backgroundColor;
+    imageProperties.color2 = colorPalette.children[1].style.backgroundColor;
+    imageProperties.color3 = colorPalette.children[2].style.backgroundColor;
+    imageProperties.color4 = colorPalette.children[3].style.backgroundColor;
+    for (let i = 0; i < favouriteImages.length; i++) {
+        if (imageUrl === favouriteImages[i].url) {
+            event.currentTarget.classList.remove("added");
+            favouriteImages.splice(i, 1);
+            localStorage.setItem("imageHueUrl", JSON.stringify(favouriteImages));
+        }
+    }
+    favouriteImages.push(imageProperties);
+    localStorage.setItem("imageHueUrl", JSON.stringify(favouriteImages));
+
+}
+
+function loadFavourites(item){
+    const imageUrl = item.children[0].getAttribute("src");
+    if (localStorage.getItem("imageHueUrl")) {
+        favouriteImages = JSON.parse(localStorage.getItem("imageHueUrl"));
+    }
+    for (let i = 0; i < favouriteImages.length; i++) {
+        if (imageUrl === favouriteImages[i].url) {
+            item.querySelector(".favourite").classList.add("added");
+        }
+    }
+}
+
 
 
 loadImageSet();

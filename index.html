@@ -4,6 +4,7 @@
 <head>
     <title>Image Hues</title>
     <link rel="stylesheet" href="./styles/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -11,10 +12,30 @@
     <div class="page-wrapper">
 
         <div class="top-navigation">
-
+            <div class="logo"></div>
+            <ul id="nav-items">
+                <li><a href="index.html" class="index">Home</a></li>
+                <li><a href="about.html" class="about">About</a></li>
+                <li><a href="favourites.html" class="favourites">Favourites</a></li>
+            </ul>
         </div>
 
         <div class="image-container">
+        </div>
+
+        <div class="loader">
+            <svg version="1.1" id="L4" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                x="0px" y="0px" viewBox="0 0 100 100" enable-background="new 0 0 0 0" xml:space="preserve">
+                <circle fill="#ccc" stroke="none" cx="6" cy="50" r="6">
+                    <animate attributeName="opacity" dur="1s" values="0;1;0" repeatCount="indefinite" begin="0.1" />
+                </circle>
+                <circle fill="#ccc" stroke="none" cx="26" cy="50" r="6">
+                    <animate attributeName="opacity" dur="1s" values="0;1;0" repeatCount="indefinite" begin="0.2" />
+                </circle>
+                <circle fill="#ccc" stroke="none" cx="46" cy="50" r="6">
+                    <animate attributeName="opacity" dur="1s" values="0;1;0" repeatCount="indefinite" begin="0.3" />
+                </circle>
+            </svg>
         </div>
 
     </div>
@@ -26,6 +47,7 @@
 <script src="./js/axios.min.js"></script>
 <script src="./js/color-thief.min.js"></script>
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.0/color-thief.umd.js"></script> -->
+<script src="./js/common.js"></script>
 <script src="./js/main.js"></script>
 
 </html>
