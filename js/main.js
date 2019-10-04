@@ -37,11 +37,10 @@ function fetchImage() {
 
             if (!imageExists) {
 
-                // createImageCard(response.request.responseURL);
+                createImageCard(response.request.responseURL);
 
                 displayedImageUrls.push(response.request.responseURL);
-                storeUrl(displayedImageUrls);
-                console.log(displayedImageUrls.length);
+                // storeUrl(displayedImageUrls);
 
             }
 
@@ -137,12 +136,16 @@ function createImageCard(url) {
                         </g>
                     </svg>
                 </div>
-            
             `
-    item.children[0].setAttribute("crossorigin", "anonymous");
-    findColors(item);
-    imageContainer.appendChild(item);
-    loadFavourites(item);
+
+    let img = item.children[0];
+    img.setAttribute("crossorigin", "anonymous");
+    img.addEventListener('load', function () {
+        findColors(item);
+        imageContainer.appendChild(item);
+        loadFavourites(item);
+    });
+
 }
 
 
@@ -170,7 +173,6 @@ function loadImageSet() {
 //Find image color palette
 function findColors(item) {
 
-    let colorValues;
     const img = item.children[0];
 
     const colorThief = new ColorThief();
@@ -179,17 +181,16 @@ function findColors(item) {
     const color3 = img.nextElementSibling.children[2];
     const color4 = img.nextElementSibling.children[3];
 
-    if (img.complete) {
-        fillColor(colorThief.getPalette(img, 4));
-        colorValues = colorThief.getPalette(img, 4);
+    // if (img.complete) {
+    //     fillColor(colorThief.getPalette(img, 4));
+    // } else {
+    //     img.addEventListener('load', function () {
+    //         fillColor(colorThief.getPalette(img, 4));
+    //         img.className = "loaded";
+    //     });
+    // }
 
-    } else {
-        img.addEventListener('load', function () {
-            fillColor(colorThief.getPalette(img, 4));
-            colorValues = colorThief.getPalette(img, 4);
-
-        });
-    }
+    fillColor(colorThief.getPalette(img, 4));
 
     function fillColor(colors) {
         color1.style.backgroundColor = `rgb(${colors[0][0]}, ${colors[0][1]}, ${colors[0][2]})`;
@@ -203,8 +204,6 @@ function findColors(item) {
         color4.children[0].innerHTML = "<span>" + rgbToHex(colors[3][0], colors[3][1], colors[3][1]) + "</span";
 
     }
-
-
 
 }
 
@@ -361,6 +360,7 @@ function storeUrl(urls) {
 // for (let i = 0; i < 1000; i++){
 //     fetchImage();
 // }
+
 
 if (loadFromJson) {
     loadImageSetFromJson();
