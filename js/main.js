@@ -41,6 +41,7 @@ function fetchImage() {
                 createImageCard(response.request.responseURL);
 
                 displayedImageUrls.push(response.request.responseURL);
+                // console.log(displayedImageUrls.length);
                 // storeUrl(displayedImageUrls);
 
             }
