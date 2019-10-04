@@ -128,8 +128,18 @@ html, body {
   background: #00acee;
 }
 
+.header-container .heading .social-media .twitter:hover img {
+  -webkit-filter: invert(100%);
+  filter: invert(100%);
+}
+
 .header-container .heading .social-media .fb:hover {
   background: #3b5998;
+}
+
+.header-container .heading .social-media .fb:hover img {
+  -webkit-filter: invert(100%);
+  filter: invert(100%);
 }
 
 .header-container h3 {
