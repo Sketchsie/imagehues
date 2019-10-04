@@ -2,6 +2,7 @@ let imagesPerLoad = 20;
 let totalImageSets = 5;
 let imageContainer = document.querySelector(".image-container");
 let loader = document.querySelector(".loader");
+let footer = document.querySelector("footer");
 let imagesSetsLoaded = 0;
 let flag = true;
 let favouriteImages = [];
@@ -72,6 +73,7 @@ function createImageSetFromJson() {
     if (imagesSetsLoaded < totalImageSets) {
 
         loader.style.display = "flex";
+        footer.style.display = "none";
 
         for (let i = imagesSetsLoaded * imagesPerLoad + 1; i < imagesPerLoad * (imagesSetsLoaded + 1); i++) {
             createImageCard(displayedImageUrls[i]);
@@ -81,6 +83,8 @@ function createImageSetFromJson() {
     }
     else {
         loader.style.display = "none";
+        footer.style.display = "block";
+
     }
 }
 
@@ -157,6 +161,7 @@ function loadImageSet() {
     if (imagesSetsLoaded < totalImageSets) {
 
         loader.style.display = "flex";
+        footer.style.display = "none";
 
         for (let i = 0; i < imagesPerLoad; i++) {
             fetchImage();
@@ -165,6 +170,7 @@ function loadImageSet() {
     }
     else {
         loader.style.display = "none";
+        footer.style.display = "block";
     }
 
 }
@@ -340,13 +346,10 @@ window.addEventListener("scroll", () => {
             }
             flag = false;
         }
-
-
     }
     else {
         flag = true;
     }
-
 
 });
 

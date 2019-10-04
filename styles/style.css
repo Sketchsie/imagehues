@@ -420,6 +420,19 @@ html, body {
   margin-top: 10px;
 }
 
+footer h4 {
+  text-align: center;
+  font-size: 1rem;
+  color: #A8A8A8;
+  font-weight: 400;
+}
+
+footer h4 a {
+  cursor: pointer;
+  text-decoration: underline;
+  color: #A8A8A8;
+}
+
 @-webkit-keyframes slide-up {
   0% {
     opacity: 0;
