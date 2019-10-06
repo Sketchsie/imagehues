@@ -300,7 +300,7 @@ html,body
 #empty-favourites-page
     text-align: center
     margin: 0 auto
-    display: none
+    // display: none
     img
         width: 25%
     .message
@@ -383,6 +383,9 @@ footer
 @media (max-width: 740px)
     .header-container .heading .social-media
         display: none
+    .about-wrapper
+        width: 80%
+        margin-bottom: 50px
 
 @media (max-width: 580px)
     .image-container
@@ -394,8 +397,14 @@ footer
                     height: 20px
     .header-container .additional-info a img
         display: none
+    #empty-favourites-page img
+        width: 50%
 
 @media (max-width: 480px)
+    .top-navigation
+        #logo
+            h4.static
+                display: none
     .image-container
         .item
             width: calc(100% - 30px)

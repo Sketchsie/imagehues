@@ -444,7 +444,6 @@ html, body {
 #empty-favourites-page {
   text-align: center;
   margin: 0 auto;
-  display: none;
 }
 
 #empty-favourites-page img {
@@ -591,6 +590,10 @@ footer h4 a {
   .header-container .heading .social-media {
     display: none;
   }
+  .about-wrapper {
+    width: 80%;
+    margin-bottom: 50px;
+  }
 }
 
 @media (max-width: 580px) {
@@ -604,9 +607,15 @@ footer h4 a {
   .header-container .additional-info a img {
     display: none;
   }
+  #empty-favourites-page img {
+    width: 50%;
+  }
 }
 
 @media (max-width: 480px) {
+  .top-navigation #logo h4.static {
+    display: none;
+  }
   .image-container .item {
     width: calc(100% - 30px);
   }

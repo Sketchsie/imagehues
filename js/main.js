@@ -357,10 +357,9 @@ window.addEventListener("scroll", () => {
         flag = true;
     }
 
-    console.log(imageContainer.offsetTop, window.scrollY);
     let logoContainer = document.getElementById("logo");
 
-    if(window.scrollY > imageContainer.offsetTop){
+    if(window.scrollY > imageContainer.offsetTop && window.innerWidth > 480){
         logoContainer.children[1].className = "show";
     }
     else{
