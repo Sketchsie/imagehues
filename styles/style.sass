@@ -31,6 +31,28 @@ html,body
     justify-content: space-between
     padding: 0 20px
     z-index: 200
+    #logo
+        display: flex
+        align-items: center
+        cursor: pointer
+        text-decoration: none
+        img
+            width: 30px
+        h4
+            font-family: 'Montserrat', sans-serif
+            font-weight: 700
+            font-size: 1rem
+            color: $black1
+            margin-left: 10px
+            animation: slide-up-light 1s ease
+            display: none
+            span
+                color: $red
+        h4.show
+            display: block
+        h4.static
+            animation: none
+            display: block
     #nav-items
         li
             list-style: none
@@ -313,6 +335,15 @@ footer
     0% 
         opacity: 0
         transform: translateY(30px)
+    
+    100%
+        opacity: 1
+        transform: translateY(0)
+
+@keyframes slide-up-light
+    0% 
+        opacity: 0
+        transform: translateY(10px)
     
     100%
         opacity: 1

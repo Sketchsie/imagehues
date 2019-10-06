@@ -339,10 +339,14 @@ window.addEventListener("scroll", () => {
             if (flag) {
 
                 if (loadFromJson) {
-                    loadImageSetFromJson();
+                    setTimeout(() => {
+                        loadImageSetFromJson();
+                    }, 500);
                 }
                 else {
-                    loadImageSet();
+                    setTimeout(() => {
+                        loadImageSet();
+                    }, 500);
                 }
 
             }
@@ -351,6 +355,16 @@ window.addEventListener("scroll", () => {
     }
     else {
         flag = true;
+    }
+
+    console.log(imageContainer.offsetTop, window.scrollY);
+    let logoContainer = document.getElementById("logo");
+
+    if(window.scrollY > imageContainer.offsetTop){
+        logoContainer.children[1].className = "show";
+    }
+    else{
+        logoContainer.children[1].className = "";
     }
 
 });
