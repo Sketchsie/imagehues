@@ -147,7 +147,7 @@ function createImageCard(url) {
     let img = item.children[0];
     img.setAttribute("crossorigin", "anonymous");
     img.addEventListener('load', function () {
-        // findColors(item);
+        findColors(item);
         imageContainer.appendChild(item);
         loadFavourites(item);
     });
