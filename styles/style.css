@@ -468,6 +468,10 @@ html, body {
   margin-top: 10px;
 }
 
+footer {
+  display: none;
+}
+
 footer h4 {
   text-align: center;
   font-size: 1rem;
