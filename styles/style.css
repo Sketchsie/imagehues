@@ -128,8 +128,18 @@ html, body {
   background: #00acee;
 }
 
+.header-container .heading .social-media .twitter:hover img {
+  -webkit-filter: invert(100%);
+  filter: invert(100%);
+}
+
 .header-container .heading .social-media .fb:hover {
   background: #3b5998;
+}
+
+.header-container .heading .social-media .fb:hover img {
+  -webkit-filter: invert(100%);
+  filter: invert(100%);
 }
 
 .header-container h3 {
@@ -417,6 +427,19 @@ html, body {
   width: 50%;
   margin: 0 auto;
   margin-top: 10px;
+}
+
+footer h4 {
+  text-align: center;
+  font-size: 1rem;
+  color: #A8A8A8;
+  font-weight: 400;
+}
+
+footer h4 a {
+  cursor: pointer;
+  text-decoration: underline;
+  color: #A8A8A8;
 }
 
 @-webkit-keyframes slide-up {

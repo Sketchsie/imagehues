@@ -1,7 +1,8 @@
-let imagesPerLoad = 30;
-let totalImageSets = 15;
+let imagesPerLoad = 20;
+let totalImageSets = 5;
 let imageContainer = document.querySelector(".image-container");
 let loader = document.querySelector(".loader");
+let footer = document.querySelector("footer");
 let imagesSetsLoaded = 0;
 let flag = true;
 let favouriteImages = [];
@@ -10,11 +11,11 @@ let displayedImageUrls = [];
 let rowUrl = [];
 let continuousLoad = true;
 let scrollOffset = 70;
+let loadFromJson = true;
 
 
 //Fetch image set with api
 function fetchImage() {
-
 
     // const requestUrl = `https://picsum.photos/400/300?random=${Math.ceil(Math.random() * 10000)}`;
     const requestUrl = `https://source.unsplash.com/collection/random/400x300?sig=${Math.ceil(Math.random() * 10000)}`;
@@ -27,9 +28,8 @@ function fetchImage() {
         .then(function (response) {
             imageUrl = response.request.responseURL;
 
-
+            //Check image duplicate
             let imageExists = false;
-
 
             for (let i = 0; i < displayedImageUrls.length; i++) {
                 if (response.request.responseURL === displayedImageUrls[i]) {
@@ -42,6 +42,9 @@ function fetchImage() {
                 createImageCard(response.request.responseURL);
 
                 displayedImageUrls.push(response.request.responseURL);
+                // console.log(displayedImageUrls.length);
+                // storeUrl(displayedImageUrls);
+
             }
 
 
@@ -50,6 +53,63 @@ function fetchImage() {
 }
 
 
+//Fetch image urls from local json data
+function fetchImageFromJson() {
+    axios.get('http://localhost:5500/urls.json').then(function (response) {
+        displayedImageUrls = response.data[0].urls;
+        createImageSetFromJson();
+    })
+}
+
+
+//Load image set from local json data
+function loadImageSetFromJson() {
+    fetchImageFromJson();
+}
+
+
+//Create image set from local json data
+function createImageSetFromJson() {
+    displayedImageUrls = shuffle(displayedImageUrls);
+
+    if (imagesSetsLoaded < totalImageSets) {
+
+        loader.style.display = "flex";
+        footer.style.display = "none";
+
+        for (let i = imagesSetsLoaded * imagesPerLoad + 1; i < imagesPerLoad * (imagesSetsLoaded + 1); i++) {
+            createImageCard(displayedImageUrls[i]);
+        }
+
+        imagesSetsLoaded++;
+    }
+    else {
+        loader.style.display = "none";
+        footer.style.display = "block";
+
+    }
+}
+
+
+//Random sort array
+function shuffle(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex;
+
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        // And swap it with the current element.
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+    }
+
+    return array;
+}
 
 
 
@@ -82,12 +142,16 @@ function createImageCard(url) {
                         </g>
                     </svg>
                 </div>
-            
             `
-    imageContainer.appendChild(item);
-    item.children[0].setAttribute("crossorigin", "anonymous");
-    findColors(item);
-    loadFavourites(item);
+
+    let img = item.children[0];
+    img.setAttribute("crossorigin", "anonymous");
+    img.addEventListener('load', function () {
+        findColors(item);
+        imageContainer.appendChild(item);
+        loadFavourites(item);
+    });
+
 }
 
 
@@ -96,11 +160,10 @@ function loadImageSet() {
 
     imagesSetsLoaded++;
 
-
-
     if (imagesSetsLoaded < totalImageSets) {
 
         loader.style.display = "flex";
+        footer.style.display = "none";
 
         for (let i = 0; i < imagesPerLoad; i++) {
             fetchImage();
@@ -109,14 +172,15 @@ function loadImageSet() {
     }
     else {
         loader.style.display = "none";
+        footer.style.display = "block";
     }
 
 }
 
+
 //Find image color palette
 function findColors(item) {
 
-    let color;
     const img = item.children[0];
 
     const colorThief = new ColorThief();
@@ -125,13 +189,16 @@ function findColors(item) {
     const color3 = img.nextElementSibling.children[2];
     const color4 = img.nextElementSibling.children[3];
 
-    if (img.complete) {
-        fillColor(colorThief.getPalette(img, 4));
-    } else {
-        img.addEventListener('load', function () {
-            fillColor(colorThief.getPalette(img, 4));
-        });
-    }
+    // if (img.complete) {
+    //     fillColor(colorThief.getPalette(img, 4));
+    // } else {
+    //     img.addEventListener('load', function () {
+    //         fillColor(colorThief.getPalette(img, 4));
+    //         img.className = "loaded";
+    //     });
+    // }
+
+    fillColor(colorThief.getPalette(img, 4));
 
     function fillColor(colors) {
         color1.style.backgroundColor = `rgb(${colors[0][0]}, ${colors[0][1]}, ${colors[0][2]})`;
@@ -143,36 +210,11 @@ function findColors(item) {
         color2.children[0].innerHTML = "<span>" + rgbToHex(colors[1][0], colors[1][1], colors[1][1]) + "</span";
         color3.children[0].innerHTML = "<span>" + rgbToHex(colors[2][0], colors[2][1], colors[2][1]) + "</span";
         color4.children[0].innerHTML = "<span>" + rgbToHex(colors[3][0], colors[3][1], colors[3][1]) + "</span";
-    }
 
+    }
 
 }
 
-
-//Load more images when scroll reaches bottom
-window.addEventListener("scroll", () => {
-    if (Math.ceil(window.innerHeight + document.documentElement.scrollTop) >= document.body.offsetHeight - scrollOffset) {
-
-        if (continuousLoad) {
-            setTimeout(() => {
-                loadImageSet();
-            }, 500);
-        }
-        else {
-            if (flag) {
-                loadImageSet();
-            }
-            flag = false;
-        }
-
-
-    }
-    else {
-        flag = true;
-    }
-
-
-});
 
 
 //Copy color to clipboard on click
@@ -277,8 +319,60 @@ function loadFavourites(item) {
 }
 
 
+//Load more images when scroll reaches bottom
+window.addEventListener("scroll", () => {
+    if (Math.ceil(window.innerHeight + document.documentElement.scrollTop) >= document.body.offsetHeight - scrollOffset) {
 
-loadImageSet();
+        if (continuousLoad && !loadFromJson) {
+            setTimeout(() => {
+
+                if (loadFromJson) {
+                    loadImageSetFromJson();
+                }
+                else {
+                    loadImageSet();
+                }
+
+            }, 500);
+        }
+        else {
+            if (flag) {
+
+                if (loadFromJson) {
+                    loadImageSetFromJson();
+                }
+                else {
+                    loadImageSet();
+                }
+
+            }
+            flag = false;
+        }
+    }
+    else {
+        flag = true;
+    }
+
+});
+
+
+
+function storeUrl(urls) {
+    localStorage.setItem("storedUrls", JSON.stringify(urls));
+}
+
+
+// for (let i = 0; i < 1000; i++){
+//     fetchImage();
+// }
+
+
+if (loadFromJson) {
+    loadImageSetFromJson();
+}
+else {
+    loadImageSet()
+}
 
 
 
