@@ -153,8 +153,7 @@ function removeFavourites(event) {
         }
     }
 
-    imageContainer.innerHTML = "";
-    loadImages();
+    event.currentTarget.parentElement.remove();
 
 }
 
