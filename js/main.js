@@ -55,7 +55,7 @@ function fetchImage() {
 
 //Fetch image urls from local json data
 function fetchImageFromJson() {
-    axios.get('http://imagehues.com/urls.json').then(function (response) {
+    axios.get('https://imagehues.com/urls.json').then(function (response) {
         displayedImageUrls = response.data[0].urls;
         createImageSetFromJson();
     })
