@@ -103,6 +103,7 @@ html, body {
   padding-top: 50px;
   padding-left: 9%;
   padding-right: 9%;
+  max-width: 1500px;
 }
 
 .header-container .heading {
@@ -180,6 +181,12 @@ html, body {
 .header-container .heading .social-media .fb:hover img {
   -webkit-filter: invert(100%);
   filter: invert(100%);
+}
+
+.header-container .heading .product-hunt {
+  position: absolute;
+  top: 170px;
+  right: -20px;
 }
 
 .header-container h3 {
@@ -587,6 +594,9 @@ footer h4 a {
     width: calc(50% - 30px);
     margin: 5px;
     margin-bottom: 10px;
+  }
+  .product-hunt {
+    display: none;
   }
 }
 
