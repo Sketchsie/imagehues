@@ -61,12 +61,19 @@ function fetchImageFromJson() {
     })
 }
 
+function fetchLocalImages(){
+    for(let i = 0; i<970; i++){
+        displayedImageUrls[i] = "../unsplash_images/img"+i+".jpg";
+    }
+    createImageSetFromJson();
+}
+
 
 //Load image set from local json data
 function loadImageSetFromJson() {
-    fetchImageFromJson();
+    // fetchImageFromJson();
+    fetchLocalImages();
 }
-
 
 //Create image set from local json data
 function createImageSetFromJson() {
@@ -151,6 +158,7 @@ function createImageCard(url) {
         imageContainer.appendChild(item);
         loadFavourites(item);
     });
+    img.on
 
 }
 
