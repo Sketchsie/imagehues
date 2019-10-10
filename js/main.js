@@ -1,5 +1,6 @@
 let imagesPerLoad = 20;
 let totalImageSets = 7;
+let totalImages = 970;
 let imageContainer = document.querySelector(".image-container");
 let loader = document.querySelector(".loader");
 let footer = document.querySelector("footer");
@@ -62,7 +63,7 @@ function fetchImageFromJson() {
 }
 
 function fetchLocalImages(){
-    for(let i = 0; i<970; i++){
+    for(let i = 0; i<totalImages; i++){
         displayedImageUrls[i] = "../unsplash_images/img"+i+".jpg";
     }
     createImageSetFromJson();
