@@ -1,6 +1,6 @@
 let imagesPerLoad = 20;
 let totalImageSets = 7;
-let totalImages = 1210;
+let totalImages = 1228;
 let imageContainer = document.querySelector(".image-container");
 let loader = document.querySelector(".loader");
 let footer = document.querySelector("footer");
@@ -159,6 +159,7 @@ function createImageCard(url) {
         imageContainer.appendChild(item);
         loadFavourites(item);
     });
+    
 
 }
 
