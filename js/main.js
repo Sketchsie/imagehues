@@ -1,6 +1,6 @@
 let imagesPerLoad = 20;
 let totalImageSets = 7;
-let totalImages = 1228;
+let totalImages = 1260;
 let imageContainer = document.querySelector(".image-container");
 let loader = document.querySelector(".loader");
 let footer = document.querySelector("footer");
