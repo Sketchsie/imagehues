@@ -207,7 +207,7 @@ function findColors(item) {
     //     });
     // }
 
-    fillColor(colorThief.getPalette(img, 4));
+    fillColor(colorThief.getPalette(img, 4, 5));
 
     function fillColor(colors) {
         color1.style.backgroundColor = `rgb(${colors[0][0]}, ${colors[0][1]}, ${colors[0][2]})`;
