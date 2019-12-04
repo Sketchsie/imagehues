@@ -237,7 +237,7 @@ function onColorClick(e) {
     e.target.children[0].innerHTML = "<span>Copied</span>";
     setTimeout(() => {
         e.target.children[0].innerHTML = "<span>" + hexColor + "</span";
-    }, 4000);
+    }, 2000);
 
     function getRGB(str) {
         var match = str.match(/rgba?\((\d{1,3}), ?(\d{1,3}), ?(\d{1,3})\)?(?:, ?(\d(?:\.\d?))\))?/);
